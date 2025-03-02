@@ -1,1 +1,1 @@
-### Better Auth Hono
+### Pharmacy Management

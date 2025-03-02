@@ -1,11 +1,12 @@
 {
-  "name": "better-auth-hono",
+  "name": "pharmacy-management",
   "type": "module",
   "version": "1.0.0",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "lint": "eslint .",
     "format": "pnpm lint --fix",
+    "build": "tsc && tsc-alias",
     "prisma:merge": "tsx scripts/merge-schema.ts",
     "prisma:generate": "npm run prisma:merge && prisma generate",
     "prisma:migrate": "npm run prisma:merge && prisma migrate dev",
@@ -38,6 +39,7 @@
     "eslint": "^9.18.0",
     "eslint-plugin-format": "^1.0.1",
     "prisma": "^6.2.1",
+    "tsc-alias": "^1.8.11",
     "tsx": "^4.19.2"
   }
 }
