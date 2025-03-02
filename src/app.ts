@@ -1,0 +1,31 @@
+import { cors } from "hono/cors";
+
+import { configureOpenApi } from "./lib/configure-open-api";
+import { createApp } from "./lib/create-app";
+// Import all routes
+import auth from "./module/auth";
+import email from "./module/email";
+import index from "./module/index.route";
+
+const app = createApp();
+configureOpenApi(app);
+
+const routes = [index, auth, email] as const;
+
+routes.forEach(route => app.route("/api", route));
+
+export type AppType = typeof routes[number];
+
+export { app };
+
+app.use(
+  "/**", // or replace with "*" to enable cors for all routes
+  cors({
+    origin: "http://localhost:3001", // replace with your origin
+    allowHeaders: ["Content-Type", "Authorization"],
+    allowMethods: ["POST", "GET", "OPTIONS"],
+    exposeHeaders: ["Content-Length"],
+    maxAge: 600,
+    credentials: true,
+  }),
+);

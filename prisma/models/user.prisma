@@ -1,0 +1,85 @@
+
+enum Role {
+  ADMIN
+  PATIENT
+  PHARMACIST
+}
+
+enum AccountStatus {
+  ACTIVE
+  PENDING
+  SUSPENDED
+  INACTIVE
+}
+
+
+model User {
+  id         String                            @id @default(cuid())
+  firstName  String
+  lastName   String
+  email      String                            @unique
+  phone      String?
+  password   String
+  role       Role                              @default(PATIENT)
+  status     AccountStatus                     @default(PENDING)
+  verified   Boolean                           @default(false)
+  createdAt  DateTime                          @default(now())
+  updatedAt  DateTime                          @updatedAt
+  deletedAt  DateTime?
+  sessions   Session[]
+  verificationCodes VerificationCode[]
+  deletedSessions Session[]                   @relation("DeletedBy")
+  deletedVerificationCodes VerificationCode[]  @relation("DeletedBy")
+}
+
+enum LoginAttemptStatus {
+  SUCCESS
+  FAILED
+}
+
+model Session {
+  id         String                 @id @default(cuid())
+  userId     String?
+  user       User?                  @relation(fields: [userId], references: [id], onDelete: SetNull)
+  ipAddress  String?
+  userAgent  String?
+  attempt    LoginAttemptStatus     @default(SUCCESS)
+  loginAt    DateTime               @default(now())
+  expiresAt  DateTime?
+  createdAt  DateTime               @default(now())
+  updatedAt  DateTime               @updatedAt
+  deletedAt  DateTime?
+  deletedBy  User?                  @relation("DeletedBy", fields: [deletedById], references: [id])
+  deletedById String?
+}
+
+enum VerificationCodeStatus {
+  PENDING
+  USED
+  EXPIRED
+}
+
+enum VerificationCodeType {
+  ACCOUNT_ACTIVATION
+  PASSWORD_RESET
+  EMAIL_CHANGE
+  PHONE_CHANGE
+  TWO_FACTOR_AUTH
+}
+
+model VerificationCode {
+  id         String                    @id @default(cuid())
+  userId     String
+  user       User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status     VerificationCodeStatus    @default(PENDING)
+  type       VerificationCodeType      @default(ACCOUNT_ACTIVATION)
+  code       String
+  expiresAt  DateTime
+  verifiedAt DateTime?
+  createdAt  DateTime                  @default(now())
+  updatedAt  DateTime                  @updatedAt
+  deletedAt  DateTime?                  
+  deletedBy  User?                     @relation("DeletedBy", fields: [deletedById], references: [id])
+  deletedById String?
+}
+
