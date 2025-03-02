@@ -29,3 +29,10 @@ lerna-debug.log*
 
 # database
 dev.db
+
+# output
+dist/
+build/
+out/
+output/
+target/
