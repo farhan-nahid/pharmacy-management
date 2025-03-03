@@ -309,9 +309,11 @@ export const getProfile = createRoute({
   method: "get",
   path: "/auth/profile",
   middleware: [authMiddleware],
-  headers: z.object({
-    Authorization: z.string().describe("Bearer token"),
-  }),
+  request: {
+    headers: z.object({
+      Authorization: z.string().describe("Bearer token"),
+    }),
+  },
   responses: {
     200: {
       description: "Successful retrieval",
@@ -356,9 +358,6 @@ export const verifyEmail = createRoute({
       },
       description: "Verification code and email",
     },
-    headers: z.object({
-      Authorization: z.string().describe("Bearer token"),
-    }),
   },
   responses: {
     200: {

@@ -27,7 +27,7 @@ const adminRegistration: AppRouteHandler<AuthRoutes["adminRegistration"]> = asyn
   const hashedPassword = await hashPassword(password);
 
   const user = await prisma.user.create({
-    data: { email, password: hashedPassword, firstName, lastName, phone, role: "ADMIN", createdBy: tokenData.id },
+    data: { email, password: hashedPassword, firstName, lastName, phone, role: "ADMIN", createdBy: tokenData?.id },
   });
 
   // generate verification code
