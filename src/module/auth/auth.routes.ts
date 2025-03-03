@@ -140,6 +140,9 @@ export const pharmacistRegistration = createRoute({
       },
       description: "User credentials for registration",
     },
+    headers: z.object({
+      Authorization: z.string().describe("Bearer token"),
+    }),
   },
   responses: {
     201: {
@@ -199,6 +202,9 @@ export const patientRegistration = createRoute({
       },
       description: "User credentials for registration",
     },
+    headers: z.object({
+      Authorization: z.string().describe("Bearer token"),
+    }),
   },
   responses: {
     201: {
@@ -257,6 +263,9 @@ export const updateProfile = createRoute({
       },
       description: "User details to update",
     },
+    headers: z.object({
+      Authorization: z.string().describe("Bearer token"),
+    }),
   },
   responses: {
     200: {
@@ -300,6 +309,9 @@ export const getProfile = createRoute({
   method: "get",
   path: "/auth/profile",
   middleware: [authMiddleware],
+  headers: z.object({
+    Authorization: z.string().describe("Bearer token"),
+  }),
   responses: {
     200: {
       description: "Successful retrieval",
@@ -344,6 +356,9 @@ export const verifyEmail = createRoute({
       },
       description: "Verification code and email",
     },
+    headers: z.object({
+      Authorization: z.string().describe("Bearer token"),
+    }),
   },
   responses: {
     200: {
@@ -571,6 +586,9 @@ export const changePassword = createRoute({
       },
       description: "New password details",
     },
+    headers: z.object({
+      Authorization: z.string().describe("Bearer token"),
+    }),
   },
   responses: {
     200: {
