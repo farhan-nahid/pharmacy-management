@@ -4,6 +4,7 @@ import { configureOpenApi } from "./lib/configure-open-api";
 import { createApp } from "./lib/create-app";
 // Import all routes
 import auth from "./module/auth";
+import brand from "./module/brand";
 import email from "./module/email";
 import index from "./module/index.route";
 import product from "./module/product";
@@ -11,7 +12,7 @@ import product from "./module/product";
 const app = createApp();
 configureOpenApi(app);
 
-const routes = [index, auth, email, product] as const;
+const routes = [index, auth, brand, email, product] as const;
 
 routes.forEach(route => app.route("/api", route));
 
