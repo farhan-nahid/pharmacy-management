@@ -16,6 +16,8 @@ const router = createRouter()
   .openapi(routes.resetPasswordRequest, services.resetPasswordRequest)
   .openapi(routes.resetPassword, services.resetPassword)
   .openapi(routes.changePassword, services.changePassword)
-  .openapi(routes.updateProfile, services.updateProfile);
+  .openapi(routes.updateProfile, services.updateProfile)
+  .openapi(routes.userUpdate, services.userUpdate)
+  .openapi(routes.deleteAccount, services.deleteAccount);
 
 export default router;

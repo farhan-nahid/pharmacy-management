@@ -3,7 +3,7 @@ import { Role } from "@prisma/client";
 
 import { adminMiddleware, authMiddleware } from "@/middlewares/auth";
 
-import { AdminRegisterSchema, changePasswordSchema, EmailVerificationSchema, resetPasswordRequestSchema, resetPasswordSchema, UpdateProfileSchema, UserLoginSchema, UserProfileSchema } from "./auth.schema";
+import { AdminRegisterSchema, changePasswordSchema, EmailVerificationSchema, resetPasswordRequestSchema, resetPasswordSchema, UpdateProfileSchema, UserLoginSchema, UserProfileSchema, UserRegisterSchema } from "./auth.schema";
 
 const tags = ["Auth"];
 
@@ -128,13 +128,24 @@ export const pharmacistRegistration = createRoute({
     body: {
       content: {
         "application/json": {
-          schema: AdminRegisterSchema,
+          schema: UserRegisterSchema,
           example: {
             email: "john.doe@example.com",
             password: "yourPassword",
             firstName: "John",
             lastName: "Doe",
             phone: "1234567890",
+            dateOfBirth: "1990-01-01",
+            gender: "MALE",
+            salary: 50000,
+            salaryCurrency: "USD",
+            salaryType: "YEARLY",
+            profilePicture: "https://example.com/profile.jpg",
+            city: "New York",
+            country: "USA",
+            zipCode: "12345",
+            addressLine1: "123 Main St",
+            addressLine2: "Apt 4B",
           },
         },
       },
@@ -190,13 +201,24 @@ export const patientRegistration = createRoute({
     body: {
       content: {
         "application/json": {
-          schema: AdminRegisterSchema,
+          schema: UserRegisterSchema,
           example: {
             email: "john.doe@example.com",
             password: "yourPassword",
             firstName: "John",
             lastName: "Doe",
             phone: "1234567890",
+            dateOfBirth: "1990-01-01",
+            gender: "MALE",
+            salary: 50000,
+            salaryCurrency: "USD",
+            salaryType: "YEARLY",
+            profilePicture: "https://example.com/profile.jpg",
+            city: "New York",
+            country: "USA",
+            zipCode: "12345",
+            addressLine1: "123 Main St",
+            addressLine2: "Apt 4B",
           },
         },
       },
@@ -209,6 +231,79 @@ export const patientRegistration = createRoute({
   responses: {
     201: {
       description: "Successful registration",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z.string(),
+            // data: UserProfileSchema,
+          }),
+        },
+      },
+    },
+    400: {
+      description: "Bad request",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+    500: {
+      description: "Internal server error",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+  },
+});
+
+export const userUpdate = createRoute({
+  tags,
+  summary: "Update user details",
+  description: "Update the details of a user.",
+  method: "patch",
+  path: "/auth/user/{id}",
+  middleware: [authMiddleware, adminMiddleware],
+  request: {
+    body: {
+      content: {
+        "application/json": {
+          schema: UpdateProfileSchema,
+          example: {
+            email: "john.doe@example.com",
+            password: "yourPassword",
+            firstName: "John",
+            lastName: "Doe",
+            phone: "1234567890",
+            dateOfBirth: "1990-01-01",
+            gender: "MALE",
+            salary: 50000,
+            salaryCurrency: "USD",
+            salaryType: "YEARLY",
+            profilePicture: "https://example.com/profile.jpg",
+            city: "New York",
+            country: "USA",
+            zipCode: "12345",
+            addressLine1: "123 Main St",
+            addressLine2: "Apt 4B",
+          },
+        },
+      },
+      description: "User details to update",
+    },
+    headers: z.object({
+      Authorization: z.string().describe("Bearer token"),
+    }),
+  },
+  responses: {
+    200: {
+      description: "Successful update",
       content: {
         "application/json": {
           schema: z.object({
@@ -623,11 +718,48 @@ export const changePassword = createRoute({
   },
 });
 
+export const deleteAccount = createRoute({
+  tags,
+  summary: "Delete account",
+  description: "Delete the account of a user.",
+  method: "delete",
+  path: "/auth/user",
+  middleware: [authMiddleware],
+  request: {
+    headers: z.object({
+      Authorization: z.string().describe("Bearer token"),
+    }),
+  },
+  responses: {
+    200: {
+      description: "Successful deletion",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+    500: {
+      description: "Internal server error",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+  },
+});
+
 export interface AuthRoutes {
   login: typeof login;
   adminRegistration: typeof adminRegistration;
   pharmacistRegistration: typeof pharmacistRegistration;
   patientRegistration: typeof patientRegistration;
+  userUpdate: typeof userUpdate;
   updateProfile: typeof updateProfile;
   getProfile: typeof getProfile;
   verifyEmail: typeof verifyEmail;
@@ -635,4 +767,5 @@ export interface AuthRoutes {
   resetPasswordRequest: typeof resetPasswordRequest;
   resetPassword: typeof resetPassword;
   changePassword: typeof changePassword;
+  deleteAccount: typeof deleteAccount;
 }

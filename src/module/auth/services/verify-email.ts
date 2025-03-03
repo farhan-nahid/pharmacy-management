@@ -12,10 +12,10 @@ const verifyEmail: AppRouteHandler<AuthRoutes["verifyEmail"]> = async (ctx) => {
   const payload = ctx.req.valid("json");
   const { code, email } = payload;
 
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { email, deletedAt: null } });
 
   if (!user) {
-    throw new ApiError(400, "User with this email does not exist");
+    throw new ApiError(404, "User with this email does not exist");
   }
 
   if (user.verified === true && user.status === "ACTIVE") {

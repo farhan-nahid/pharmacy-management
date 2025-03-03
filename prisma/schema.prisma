@@ -126,6 +126,20 @@ enum LoginAttemptStatus {
   FAILED
 }
 
+enum SalaryType {
+  HOURLY
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
 model User {
   id                             String                            @id @default(cuid())
   firstName                      String
@@ -133,6 +147,17 @@ model User {
   email                          String                            @unique
   phone                          String?
   password                       String
+  dateOfBirth                    DateTime?
+  gender                         Gender?
+  salary                         Float?
+  salaryCurrency                 String?
+  salaryType                     SalaryType?
+  profilePicture                 String?
+  city                           String?
+  country                        String?
+  zipCode                        String?
+  addressLine1                   String?
+  addressLine2                   String?
   role                           Role                              @default(PATIENT)
   status                         AccountStatus                     @default(PENDING)
   verified                       Boolean                           @default(false)
