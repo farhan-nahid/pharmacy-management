@@ -29,7 +29,7 @@ async function loginSessions(data: Session) {
 const login: AppRouteHandler<AuthRoutes["login"]> = async (ctx) => {
   const { email, password } = ctx.req.valid("json");
   const userAgent = ctx.req.header("user-agent") || "Unknown";
-  const ipAddress = ctx.req.header("x-forwarded-for") || "Unknown";
+  const ipAddress = ctx.req.header("cf-connecting-ip") || ctx.req.header("x-forwarded-for") || "Unknown";
 
   const user = await prisma.user.findUnique({ where: { email } });
 

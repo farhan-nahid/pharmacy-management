@@ -35,6 +35,14 @@ const UserProfileSchema = z.object({
   role: z.nativeEnum(Role),
   status: z.nativeEnum(AccountStatus),
   verified: z.boolean(),
+  sessions: z.array(z.object({
+    id: z.string().cuid(),
+    attempt: z.number(),
+    userAgent: z.string(),
+    ipAddress: z.string(),
+    loginAt: z.date(),
+    expiresAt: z.date().optional(),
+  })).optional(),
 });
 
 const VerifyTokenSchema = z.object({
