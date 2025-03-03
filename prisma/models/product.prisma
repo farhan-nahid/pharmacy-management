@@ -1,0 +1,47 @@
+
+
+model Brand {
+  id               String                        @id @default(cuid())
+  name             String                        @unique
+  createdAt        DateTime                      @default(now())
+  updatedAt        DateTime                      @updatedAt
+  deletedAt        DateTime?
+  createdBy        String?
+  deletedBy        String?
+  products         Product[]
+}
+
+model Category {
+  id               String                        @id @default(cuid())
+  name             String                        @unique
+  createdAt        DateTime                      @default(now())
+  updatedAt        DateTime                      @updatedAt
+  deletedAt        DateTime?
+  createdBy        String?
+  deletedBy        String?
+  products         Product[]
+}
+
+model Product {
+  id                String                       @id @default(cuid())
+  name              String                       
+  sku               String                       @unique
+  barcode           String                       @unique
+  quantity          Int                          @default(0)
+  buyPrice          Float?
+  sellPrice         Float?
+  brand             Brand?                       @relation(fields: [brandId], references: [id])
+  brandId           String?
+  category          Category?                    @relation(fields: [categoryId], references: [id])
+  categoryId        String?
+  expiryDate        DateTime?
+  createdAt         DateTime                     @default(now())
+  updatedAt         DateTime                     @updatedAt
+  deletedAt         DateTime?
+  createdBy         String?
+  deletedBy         String?
+  
+  @@index([brandId], name: "brandId")
+  @@index([categoryId], name: "categoryId")
+  @@index([sku], name: "sku")
+}
