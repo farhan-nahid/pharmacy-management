@@ -44,11 +44,12 @@ model Email {
   source     EmailSource
   sendAt     DateTime @default(now())
 }
-
-
 model Brand {
   id               String                        @id @default(cuid())
   name             String                        @unique
+  code             String                        @unique
+  description      String?
+  logo             String?
   createdAt        DateTime                      @default(now())
   updatedAt        DateTime                      @updatedAt
   deletedAt        DateTime?
@@ -60,6 +61,7 @@ model Brand {
 model Category {
   id               String                        @id @default(cuid())
   name             String                        @unique
+  description      String?
   createdAt        DateTime                      @default(now())
   updatedAt        DateTime                      @updatedAt
   deletedAt        DateTime?
@@ -140,7 +142,7 @@ model User {
   createdBy                      String?                           
   createdById                    String?
   deletedBy                      String?                           
-  sessions                       Session[]
+  sessions                       Session[]  
   verificationCodes              VerificationCode[]
   deletedSessions                Session[]                          @relation("DeletedBy")
   deletedVerificationCodes       VerificationCode[]                 @relation("DeletedBy")

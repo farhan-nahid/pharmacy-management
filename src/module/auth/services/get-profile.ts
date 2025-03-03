@@ -21,7 +21,11 @@ const getProfile: AppRouteHandler<AuthRoutes["getProfile"]> = async (ctx) => {
       role: true,
       status: true,
       verified: true,
+      sessions: {
+        select: { id: true, attempt: true, userAgent: true, ipAddress: true, loginAt: true, expiresAt: true },
+      },
     },
+
   });
 
   if (!user) {

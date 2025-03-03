@@ -47,7 +47,7 @@ model User {
   createdBy                      String?                           
   createdById                    String?
   deletedBy                      String?                           
-  sessions                       Session[]
+  sessions                       Session[]  
   verificationCodes              VerificationCode[]
   deletedSessions                Session[]                          @relation("DeletedBy")
   deletedVerificationCodes       VerificationCode[]                 @relation("DeletedBy")
