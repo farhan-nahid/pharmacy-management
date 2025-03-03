@@ -12,18 +12,8 @@ function createRouter() {
 
 function createApp() {
   const app = createRouter();
-  app.use(serveEmojiFavicon("📝"));
+  app.use(serveEmojiFavicon("🚀"));
   app.use(pinoLogger());
-  // app.use(
-
-  //   (ctx, next) => {
-  //     console.log("Not Found");
-  //     // next();
-  //     ctx.json({ message: "Not Found" });
-  //     // next();
-  //     // ctx.res.status(404).json({ message: "Not Found" });
-  //   },
-  // );
 
   app.notFound(notFound);
   app.onError(onError);

@@ -9,9 +9,12 @@ import { generateVerificationCode } from "@/utils/generate-verification-code";
 import { hashPassword } from "@/utils/hash-password";
 
 import type { AuthRoutes } from "../auth.routes";
+import type { TokenUser } from "../auth.schema";
 
 const adminRegistration: AppRouteHandler<AuthRoutes["adminRegistration"]> = async (ctx) => {
   const payload = ctx.req.valid("json");
+  const tokenData = ctx.get("user") as TokenUser;
+
   const { email, password, firstName, lastName, phone } = payload;
 
   const userExists = await prisma.user.findUnique({ where: { email } });
@@ -24,7 +27,7 @@ const adminRegistration: AppRouteHandler<AuthRoutes["adminRegistration"]> = asyn
   const hashedPassword = await hashPassword(password);
 
   const user = await prisma.user.create({
-    data: { email, password: hashedPassword, firstName, lastName, phone, role: "ADMIN" },
+    data: { email, password: hashedPassword, firstName, lastName, phone, role: "ADMIN", createdBy: tokenData.id },
   });
 
   // generate verification code

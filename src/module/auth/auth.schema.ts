@@ -62,4 +62,13 @@ const changePasswordSchema = z.object({
   path: ["confirmPassword"],
 });
 
+export interface TokenUser {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  role: string;
+}
+
 export { AdminRegisterSchema, changePasswordSchema, EmailVerificationSchema, resetPasswordRequestSchema, resetPasswordSchema, UpdateProfileSchema, UserLoginSchema, UserProfileSchema, VerifyTokenSchema };

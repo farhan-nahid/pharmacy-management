@@ -9,8 +9,9 @@ import type { AuthRoutes } from "../auth.routes";
 
 const changePassword: AppRouteHandler<AuthRoutes["changePassword"]> = async (ctx) => {
   const payload = ctx.req.valid("json");
+  const userId = ctx.get("user")?.id as string;
+
   const { password } = payload;
-  const userId = "ctx.state.user.id";
 
   const user = await prisma.user.findUnique({ where: { id: userId } });
 

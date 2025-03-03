@@ -8,8 +8,9 @@ import type { AuthRoutes } from "../auth.routes";
 const updateProfile: AppRouteHandler<AuthRoutes["updateProfile"]> = async (ctx) => {
   try {
     const payload = ctx.req.valid("json");
+    const userId = ctx.get("user")?.id as string;
+
     const { email, firstName, lastName, phone } = payload;
-    const userId = "ctx.state.user.id";
 
     await prisma.user.update({
       where: { id: userId },

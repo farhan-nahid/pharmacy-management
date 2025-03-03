@@ -8,7 +8,7 @@ import type { AuthRoutes } from "../auth.routes";
 // eslint-disable-next-line ts/ban-ts-comment
 // @ts-ignore
 const getProfile: AppRouteHandler<AuthRoutes["getProfile"]> = async (ctx) => {
-  const userId = "ctx.state.user.id";
+  const userId = ctx.get("user")?.id as string;
 
   const user = await prisma.user.findUnique({
     where: { id: userId },
