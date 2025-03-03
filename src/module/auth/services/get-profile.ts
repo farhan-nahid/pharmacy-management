@@ -11,7 +11,7 @@ const getProfile: AppRouteHandler<AuthRoutes["getProfile"]> = async (ctx) => {
   const userId = ctx.get("user")?.id as string;
 
   const user = await prisma.user.findUnique({
-    where: { id: userId },
+    where: { id: userId, deletedAt: null },
     select: {
       id: true,
       firstName: true,

@@ -31,7 +31,7 @@ const login: AppRouteHandler<AuthRoutes["login"]> = async (ctx) => {
   const userAgent = ctx.req.header("user-agent") || "Unknown";
   const ipAddress = ctx.req.header("cf-connecting-ip") || ctx.req.header("x-forwarded-for") || "Unknown";
 
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { email, deletedAt: null } });
 
   if (!user) {
     throw new ApiError(401, "Invalid credentials");

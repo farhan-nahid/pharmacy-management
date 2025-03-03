@@ -13,7 +13,7 @@ const changePassword: AppRouteHandler<AuthRoutes["changePassword"]> = async (ctx
 
   const { password } = payload;
 
-  const user = await prisma.user.findUnique({ where: { id: userId } });
+  const user = await prisma.user.findUnique({ where: { id: userId, deletedAt: null } });
 
   if (!user) {
     throw new ApiError(400, "User with this email does not exist");
