@@ -25,6 +25,7 @@ const createBrand: AppRouteHandler<BrandRoutes["createBrand"]> = async (ctx) => 
 
 const getBrands: AppRouteHandler<BrandRoutes["getBrands"]> = async (ctx) => {
   const brands = await prisma.brand.findMany({
+    where: { deletedAt: null },
     orderBy: { createdAt: "desc" },
   });
   return ctx.json({ data: brands });
@@ -32,7 +33,7 @@ const getBrands: AppRouteHandler<BrandRoutes["getBrands"]> = async (ctx) => {
 
 const getBrand: AppRouteHandler<BrandRoutes["getBrand"]> = async (ctx) => {
   const id = ctx.req.param("id");
-  const brand = await prisma.brand.findUnique({ where: { id } });
+  const brand = await prisma.brand.findUnique({ where: { id, deletedAt: null } });
 
   if (!brand) {
     throw new ApiError(404, "Brand not found");
@@ -45,7 +46,7 @@ const updateBrand: AppRouteHandler<BrandRoutes["updateBrand"]> = async (ctx) => 
   const id = ctx.req.param("id");
   const payload = ctx.req.valid("json");
 
-  const brand = await prisma.brand.findUnique({ where: { id } });
+  const brand = await prisma.brand.findUnique({ where: { id, deletedAt: null } });
 
   if (!brand) {
     throw new ApiError(404, "Brand not found");
@@ -58,14 +59,15 @@ const updateBrand: AppRouteHandler<BrandRoutes["updateBrand"]> = async (ctx) => 
 
 const deleteBrand: AppRouteHandler<BrandRoutes["deleteBrand"]> = async (ctx) => {
   const id = ctx.req.param("id");
+  const userId = ctx.get("user")?.id as string;
 
-  const brand = await prisma.brand.findUnique({ where: { id } });
+  const brand = await prisma.brand.findUnique({ where: { id, deletedAt: null } });
 
   if (!brand) {
     throw new ApiError(404, "Brand not found");
   }
 
-  await prisma.brand.delete({ where: { id } });
+  await prisma.brand.update({ where: { id }, data: { deletedAt: new Date(), deletedBy: userId } });
 
   return ctx.json({ message: "Brand deleted successfully" });
 };
