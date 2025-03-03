@@ -18,14 +18,15 @@ export function configureOpenApi(app: AppOpenAPI) {
     apiReference({
       theme: "purple",
       layout: "classic",
+      hideDownloadButton: true,
       servers: [
         {
-          url: "http://localhost:8080",
-          description: "Development server",
+          url: "https://pharmacy-management-pxpo.onrender.com",
+          description: "Production server",
         },
         {
           url: "http://localhost:8080",
-          description: "Production server",
+          description: "Development server",
         },
       ],
       defaultHttpClient: {
