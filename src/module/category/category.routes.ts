@@ -12,7 +12,7 @@ export const createCategory = createRoute({
   description: "Create a new category.",
   method: "post",
   path: "/category",
-  middleware: [authMiddleware],
+  middleware: [authMiddleware()] as const,
   request: {
     body: {
       content: {
@@ -67,7 +67,7 @@ export const getCategories = createRoute({
   description: "Get all categories.",
   method: "get",
   path: "/category",
-  middleware: [authMiddleware],
+  middleware: [authMiddleware()] as const,
   request: {
     headers: z.object({
       Authorization: z.string().describe("Bearer token"),
@@ -103,7 +103,7 @@ export const getCategory = createRoute({
   description: "Get a category by ID.",
   method: "get",
   path: "/category/:id",
-  middleware: [authMiddleware],
+  middleware: [authMiddleware()] as const,
   request: {
     headers: z.object({
       Authorization: z.string().describe("Bearer token"),
@@ -139,7 +139,7 @@ export const updateCategory = createRoute({
   description: "Update a category by ID.",
   method: "patch",
   path: "/category/:id",
-  middleware: [authMiddleware],
+  middleware: [authMiddleware()] as const,
   request: {
     body: {
       content: {
@@ -197,7 +197,7 @@ export const deleteCategory = createRoute({
   description: "Delete a category by ID.",
   method: "delete",
   path: "/category/{id}",
-  middleware: [authMiddleware],
+  middleware: [authMiddleware()] as const,
   request: {
     params: z.object({
       id: z.string().cuid().describe("Category ID"),

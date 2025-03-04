@@ -12,7 +12,7 @@ export const createBrand = createRoute({
   description: "Create a new brand.",
   method: "post",
   path: "/brand",
-  middleware: [authMiddleware],
+  middleware: [authMiddleware()] as const,
   request: {
     body: {
       content: {
@@ -71,7 +71,7 @@ export const getBrands = createRoute({
   description: "Get all brands.",
   method: "get",
   path: "/brand",
-  middleware: [authMiddleware],
+  middleware: [authMiddleware()] as const,
   request: {
     headers: z.object({
       Authorization: z.string().describe("Bearer token"),
@@ -107,7 +107,7 @@ export const getBrand = createRoute({
   description: "Get a brand by ID.",
   method: "get",
   path: "/brand/{id}",
-  middleware: [authMiddleware],
+  middleware: [authMiddleware()] as const,
   request: {
     params: z.object({
       id: z.string().cuid().describe("Brand ID"),
@@ -164,7 +164,7 @@ export const updateBrand = createRoute({
   description: "Update a brand by ID.",
   method: "patch",
   path: "/brand/{id}",
-  middleware: [authMiddleware],
+  middleware: [authMiddleware()] as const,
   request: {
     params: z.object({
       id: z.string().cuid().describe("Brand ID"),
@@ -233,7 +233,7 @@ export const deleteBrand = createRoute({
   description: "Delete a brand by ID.",
   method: "delete",
   path: "/brand/{id}",
-  middleware: [authMiddleware],
+  middleware: [authMiddleware()] as const,
   request: {
     params: z.object({
       id: z.string().cuid().describe("Brand ID"),
