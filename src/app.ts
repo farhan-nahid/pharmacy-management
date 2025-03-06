@@ -17,18 +17,18 @@ const routes = [index, auth, brand, category, product, email] as const;
 
 routes.forEach(route => app.route("/api", route));
 
-export type AppType = typeof routes[number];
-
-export { app };
-
 app.use(
-  "/**", // or replace with "*" to enable cors for all routes
+  "*",
   cors({
     origin: ["http://localhost:3000", "http://localhost:5173"],
     allowHeaders: ["Content-Type", "Authorization"],
-    allowMethods: ["POST", "GET", "OPTIONS"],
+    allowMethods: ["POST", "GET", "OPTIONS", "PATCH", "DELETE"],
     exposeHeaders: ["Content-Length"],
     maxAge: 600,
     credentials: true,
   }),
 );
+
+export type AppType = typeof routes[number];
+
+export { app };
