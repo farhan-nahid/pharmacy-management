@@ -1,34 +1,40 @@
+import type { Role } from "@prisma/client";
+
 import { createMiddleware } from "hono/factory";
 
 import { verifyToken } from "@/utils/verify-token";
 
-const authMiddleware = createMiddleware(async (c, next) => {
-  const token = c.req.header("Authorization");
+function authMiddleware() {
+  return createMiddleware(async (c, next) => {
+    const token = c.req.header("Authorization");
 
-  if (!token) {
-    return c.json({ error: "Unauthorized" }, 401);
-  }
+    if (!token) {
+      return c.json({ error: "Unauthorized" }, 401);
+    }
 
-  const [, tokenValue] = token.split("Bearer ");
+    const [, tokenValue] = token.split("Bearer ");
 
-  if (!tokenValue) {
-    return c.json({ error: "Unauthorized" }, 401);
-  }
+    if (!tokenValue) {
+      return c.json({ error: "Unauthorized" }, 401);
+    }
 
-  const jwtPayload = await verifyToken(tokenValue);
+    const jwtPayload = await verifyToken(tokenValue);
 
-  c.set("user", jwtPayload);
-  await next();
-});
+    c.set("user", jwtPayload);
+    await next();
+  });
+}
 
-const adminMiddleware = createMiddleware(async (ctx, next) => {
-  const user = ctx.get("user");
+function roleMiddleware(roles: Role[]) {
+  return createMiddleware(async (ctx, next) => {
+    const user = ctx.get("user");
 
-  if (!user || user.role !== "ADMIN") {
-    return ctx.json({ error: "Forbidden" }, 403);
-  }
+    if (!user || !roles.includes(user.role)) {
+      return ctx.json({ error: "Forbidden" }, 403);
+    }
 
-  await next();
-});
+    await next();
+  });
+}
 
-export { adminMiddleware, authMiddleware };
+export { authMiddleware, roleMiddleware };

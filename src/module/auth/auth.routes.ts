@@ -1,7 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { Role } from "@prisma/client";
 
-import { adminMiddleware, authMiddleware } from "@/middlewares/auth";
+import { authMiddleware, roleMiddleware } from "@/middlewares/auth";
 
 import { AdminRegisterSchema, changePasswordSchema, EmailVerificationSchema, resetPasswordRequestSchema, resetPasswordSchema, UpdateProfileSchema, UserLoginSchema, UserProfileSchema, UserRegisterSchema } from "./auth.schema";
 
@@ -123,7 +123,7 @@ export const pharmacistRegistration = createRoute({
   description: "Register a new pharmacist user.",
   method: "post",
   path: "/auth/pharmacist-registration",
-  middleware: [authMiddleware, adminMiddleware],
+  middleware: [authMiddleware(), roleMiddleware(["ADMIN"])] as const,
   request: {
     body: {
       content: {
@@ -196,7 +196,7 @@ export const patientRegistration = createRoute({
   description: "Register a new patient user.",
   method: "post",
   path: "/auth/patient-registration",
-  middleware: [authMiddleware, adminMiddleware],
+  middleware: [authMiddleware(), roleMiddleware(["ADMIN"])] as const,
   request: {
     body: {
       content: {
@@ -269,7 +269,7 @@ export const userUpdate = createRoute({
   description: "Update the details of a user.",
   method: "patch",
   path: "/auth/user/{id}",
-  middleware: [authMiddleware, adminMiddleware],
+  middleware: [authMiddleware(), roleMiddleware(["ADMIN"])] as const,
   request: {
     body: {
       content: {
@@ -342,7 +342,7 @@ export const updateProfile = createRoute({
   description: "Update the details of a user.",
   method: "patch",
   path: "/auth/profile",
-  middleware: [authMiddleware],
+  middleware: [authMiddleware(), roleMiddleware(["ADMIN"])] as const,
   request: {
     body: {
       content: {
@@ -403,7 +403,7 @@ export const getProfile = createRoute({
   description: "Get the details of a user.",
   method: "get",
   path: "/auth/profile",
-  middleware: [authMiddleware],
+  middleware: [authMiddleware()] as const,
   request: {
     headers: z.object({
       Authorization: z.string().describe("Bearer token"),
@@ -666,7 +666,7 @@ export const changePassword = createRoute({
   description: "Change the password of a user.",
   method: "post",
   path: "/auth/change-password",
-  middleware: [authMiddleware],
+  middleware: [authMiddleware()] as const,
   request: {
     body: {
       content: {
@@ -724,7 +724,7 @@ export const deleteAccount = createRoute({
   description: "Delete the account of a user.",
   method: "delete",
   path: "/auth/user",
-  middleware: [authMiddleware],
+  middleware: [authMiddleware()] as const,
   request: {
     headers: z.object({
       Authorization: z.string().describe("Bearer token"),
