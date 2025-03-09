@@ -17,5 +17,9 @@
   },
   "tsc-alias": {
     "resolveFullPaths": true
-  }
+  },
+  "include": [
+    "src/**/*.ts", // Include source TypeScript files
+    "scripts/**/*.ts" // Include any TypeScript scripts
+  ]
 }

@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "lint": "eslint .",
-    "format": "pnpm lint --fix",
     "build": "tsc && tsc-alias",
+    "format": "pnpm lint --fix",
     "start": "node dist/src/index.js",
     "prisma:merge": "tsx scripts/merge-schema.ts",
     "prisma:generate": "npm run prisma:merge && prisma generate",
@@ -41,6 +41,7 @@
     "eslint-plugin-format": "^1.0.1",
     "prisma": "^6.2.1",
     "tsc-alias": "^1.8.11",
-    "tsx": "^4.19.2"
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.2"
   }
 }
