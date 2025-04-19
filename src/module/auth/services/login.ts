@@ -1,11 +1,10 @@
 import bcrypt from "bcryptjs";
-import jsonWebToken from "jsonwebtoken";
 
 import type { AppRouteHandler } from "@/lib/types";
 
-import env from "@/env";
 import { ApiError } from "@/lib/api-error";
 import prisma from "@/lib/prisma";
+import generateToken from "@/utils/generate-token";
 
 import type { AuthRoutes } from "../auth.routes";
 
@@ -54,15 +53,9 @@ const login: AppRouteHandler<AuthRoutes["login"]> = async (ctx) => {
     throw new ApiError(401, "Invalid credentials");
   }
 
-  const token = jsonWebToken.sign(
-    { id: user.id, firstName: user?.firstName, email: user?.email, role: user?.role },
-    env.JWT_SECRET,
-    { expiresIn: env.JWT_EXPIRES_IN as any },
-  );
-
   await loginSessions({ userId: user.id, userAgent, ipAddress });
 
-  return ctx.json({ message: "Logged in successfully", token }, 200);
+  return ctx.json({ message: "Logged in successfully", token: generateToken(user) }, 200);
 };
 
 export default login;
