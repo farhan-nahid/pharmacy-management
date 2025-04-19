@@ -2,7 +2,7 @@ import { apiReference } from "@scalar/hono-api-reference";
 
 import type { AppOpenAPI } from "./types";
 
-import PackageJSON from "../../package.json";
+import PackageJSON from "../../package.json" assert { type: "json" };
 
 export function configureOpenApi(app: AppOpenAPI) {
   app.doc("/docs", {
@@ -17,7 +17,7 @@ export function configureOpenApi(app: AppOpenAPI) {
     "/reference",
     apiReference({
       theme: "purple",
-      layout: "classic",
+      // layout: "classic",
       hideDownloadButton: true,
       servers: [
         {

@@ -5,6 +5,7 @@ import type { AppRouteHandler } from "@/lib/types";
 import backendRequest from "@/configs/axios";
 import { ApiError } from "@/lib/api-error";
 import prisma from "@/lib/prisma";
+import generateToken from "@/utils/generate-token";
 
 import type { AuthRoutes } from "../auth.routes";
 
@@ -55,7 +56,7 @@ const verifyEmail: AppRouteHandler<AuthRoutes["verifyEmail"]> = async (ctx) => {
     source: "ACCOUNT_ACTIVATION",
   });
 
-  return ctx.json({ message: "Email verified successfully" });
+  return ctx.json({ message: "Email verified successfully", token: generateToken(user) });
 };
 
 export default verifyEmail;

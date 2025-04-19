@@ -9,13 +9,12 @@ const GetProductSchema = z.object({
   buyPrice: z.number().nullable().optional(),
   sellPrice: z.number().nullable().optional(),
   brandId: z.string().cuid().nullable().optional(),
+  groupId: z.string().cuid().nullable().optional(),
   categoryId: z.string().cuid().nullable().optional(),
   expiryDate: z.date().nullable().optional(),
   createdAt: z.date(),
   updatedAt: z.date(),
   deletedAt: z.date().nullable().optional(),
-  createdBy: z.string().nullable().optional(),
-  deletedBy: z.string().nullable().optional(),
 });
 
 const CreateProductSchema = z.object({
@@ -26,6 +25,7 @@ const CreateProductSchema = z.object({
   buyPrice: z.number().nullable().optional(),
   sellPrice: z.number().nullable().optional(),
   brandId: z.string().cuid().nullable().optional(),
+  groupId: z.string().cuid().nullable().optional(),
   categoryId: z.string().cuid().nullable().optional(),
   expiryDate: z.date().nullable().optional(),
 });

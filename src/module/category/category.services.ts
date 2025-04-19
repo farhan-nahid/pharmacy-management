@@ -7,7 +7,6 @@ import type { CategoryRoutes } from "./category.routes";
 
 const createCategory: AppRouteHandler<CategoryRoutes["createCategory"]> = async (ctx) => {
   const payload = ctx.req.valid("json");
-  const userId = ctx.get("user")?.id as string;
 
   const existingCategory = await prisma.category.findFirst({
     where: { name: payload.name },
@@ -17,7 +16,7 @@ const createCategory: AppRouteHandler<CategoryRoutes["createCategory"]> = async 
     throw new ApiError(400, "Category with this name already exists");
   }
 
-  await prisma.category.create({ data: { ...payload, createdBy: userId } });
+  await prisma.category.create({ data: payload });
 
   return ctx.json({ message: "Category created successfully" }, 201);
 };
@@ -58,7 +57,6 @@ const updateCategory: AppRouteHandler<CategoryRoutes["updateCategory"]> = async 
 
 const deleteCategory: AppRouteHandler<CategoryRoutes["deleteCategory"]> = async (ctx) => {
   const id = ctx.req.param("id");
-  const userId = ctx.get("user")?.id as string;
 
   const category = await prisma.category.findUnique({ where: { id, deletedAt: null } });
 
@@ -66,7 +64,7 @@ const deleteCategory: AppRouteHandler<CategoryRoutes["deleteCategory"]> = async 
     throw new ApiError(404, "Category not found");
   }
 
-  await prisma.category.update({ where: { id }, data: { deletedAt: new Date(), deletedBy: userId } });
+  await prisma.category.update({ where: { id }, data: { deletedAt: new Date() } });
 
   return ctx.json({ message: "Category deleted successfully" });
 };

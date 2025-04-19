@@ -9,11 +9,9 @@ import { generateVerificationCode } from "@/utils/generate-verification-code";
 import { hashPassword } from "@/utils/hash-password";
 
 import type { AuthRoutes } from "../auth.routes";
-import type { TokenUser } from "../auth.schema";
 
 const patientRegistration: AppRouteHandler<AuthRoutes["patientRegistration"]> = async (ctx) => {
   const payload = ctx.req.valid("json");
-  const tokenData = ctx.get("user") as TokenUser;
 
   const { email, password, firstName, lastName, phone } = payload;
 
@@ -27,7 +25,7 @@ const patientRegistration: AppRouteHandler<AuthRoutes["patientRegistration"]> = 
   const hashedPassword = await hashPassword(password);
 
   const user = await prisma.user.create({
-    data: { email, password: hashedPassword, firstName, lastName, phone, role: "PATIENT", createdBy: tokenData.id },
+    data: { email, password: hashedPassword, firstName, lastName, phone, role: "PATIENT" },
   });
 
   // generate verification code

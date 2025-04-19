@@ -1,10 +1,45 @@
+# # Build Stage
+# FROM node:22.10-alpine3.20 AS builder
+
+# WORKDIR /build
+
+# # Install pnpm globally
+# RUN npm i -g pnpm
+
+# # Copy package.json and lock files to install dependencies
+# COPY package.json pnpm-lock.yaml ./
+# COPY prisma ./prisma/
+
+# # Install dependencies with pnpm
+# RUN pnpm install --frozen-lockfile
+
+# # Generate Prisma client
+# RUN npx prisma generate
+
+# # Copy the rest of the application files
+# COPY . .
+
+# # Build the application
+# RUN pnpm build
+
+# # Runtime Stage
+# FROM node:22.10-alpine3.20 AS runtime
+
+# WORKDIR /app
+
+# COPY --from=builder /build/node_modules ./node_modules
+# COPY --from=builder /build/dist ./dist
+# COPY --from=builder /build/prisma ./prisma
+
+# ENV NODE_ENV=production
+# # Expose port and set the command to run the app
+# EXPOSE 8080
+# CMD ["pnpm", "start"]
+
 # Build Stage
-FROM node:20-alpine AS build
+FROM node:22.10-alpine3.20 AS builder
 
-# Install dependencies and tools
-RUN apk update && apk upgrade && apk add --no-cache openssl
-
-WORKDIR /app
+WORKDIR /build
 
 # Install pnpm globally
 RUN npm i -g pnpm
@@ -13,8 +48,8 @@ RUN npm i -g pnpm
 COPY package.json pnpm-lock.yaml ./
 COPY prisma ./prisma/
 
-# Install dependencies with pnpm
-RUN pnpm i
+# Install dependencies with pnpm (using the frozen lockfile)
+RUN pnpm install --frozen-lockfile
 
 # Generate Prisma client
 RUN npx prisma generate
@@ -22,20 +57,24 @@ RUN npx prisma generate
 # Copy the rest of the application files
 COPY . .
 
-# Runtime Stage
-FROM node:20-alpine AS runtime
+# Build the application
+RUN pnpm build
 
-# Install runtime dependencies (if any, like openssl)
-RUN apk update && apk upgrade && apk add --no-cache openssl
+# Runtime Stage
+FROM node:22.10-alpine3.20 AS runtime
 
 WORKDIR /app
 
-# Install pnpm globally in the runtime stage
-RUN npm i -g pnpm
+# Copy only necessary files from the builder image
+COPY --from=builder /build/dist ./dist
+COPY --from=builder /build/prisma ./prisma
+COPY package.json pnpm-lock.yaml ./
 
-# Copy necessary build artifacts from the build stage
-COPY --from=build /app /app
+# Install only production dependencies
+RUN npm i -g pnpm && pnpm install --prod --frozen-lockfile
+
+ENV NODE_ENV=production
 
 # Expose port and set the command to run the app
 EXPOSE 8080
-CMD ["pnpm", "dev"]
+CMD ["pnpm", "start"]
