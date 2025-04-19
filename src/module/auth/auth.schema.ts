@@ -1,5 +1,7 @@
-import { AccountStatus, Gender, Role, SalaryType } from "@prisma/client";
+import pkg from "@prisma/client";
 import { z } from "zod";
+
+const { AccountStatus, Gender, Role, SalaryType } = pkg;
 
 const AdminRegisterSchema = z.object({
   email: z.string().email(),
