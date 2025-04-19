@@ -2,13 +2,11 @@ import { apiReference } from "@scalar/hono-api-reference";
 
 import type { AppOpenAPI } from "./types";
 
-import PackageJSON from "../../package.json" assert { type: "json" };
-
 export function configureOpenApi(app: AppOpenAPI) {
   app.doc("/docs", {
     openapi: "3.0.0",
     info: {
-      version: PackageJSON.version,
+      version: "1.0.0",
       title: "Pharmacy Management API",
     },
   });
