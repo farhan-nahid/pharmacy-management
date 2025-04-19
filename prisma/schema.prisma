@@ -93,6 +93,7 @@ model Product {
   expiryDate        DateTime?
   createdAt         DateTime                     @default(now())
   updatedAt         DateTime                     @updatedAt
+  deletedAt         DateTime?
   
   @@index([brandId], name: "brandId")
   @@index([categoryId], name: "categoryId")
