@@ -7,7 +7,6 @@ import type { BrandRoutes } from "./brand.routes";
 
 const createBrand: AppRouteHandler<BrandRoutes["createBrand"]> = async (ctx) => {
   const payload = ctx.req.valid("json");
-  const userId = ctx.get("user")?.id as string;
 
   // check if brand already exists with the same name or code
   const existingBrand = await prisma.brand.findFirst({
@@ -18,7 +17,7 @@ const createBrand: AppRouteHandler<BrandRoutes["createBrand"]> = async (ctx) => 
     throw new ApiError(400, "Brand with this name already exists");
   }
 
-  await prisma.brand.create({ data: { ...payload, createdBy: userId } });
+  await prisma.brand.create({ data: payload });
 
   return ctx.json({ message: "Brand created successfully" }, 201);
 };
@@ -59,7 +58,6 @@ const updateBrand: AppRouteHandler<BrandRoutes["updateBrand"]> = async (ctx) => 
 
 const deleteBrand: AppRouteHandler<BrandRoutes["deleteBrand"]> = async (ctx) => {
   const id = ctx.req.param("id");
-  const userId = ctx.get("user")?.id as string;
 
   const brand = await prisma.brand.findUnique({ where: { id, deletedAt: null } });
 
@@ -67,7 +65,7 @@ const deleteBrand: AppRouteHandler<BrandRoutes["deleteBrand"]> = async (ctx) => 
     throw new ApiError(404, "Brand not found");
   }
 
-  await prisma.brand.update({ where: { id }, data: { deletedAt: new Date(), deletedBy: userId } });
+  await prisma.brand.update({ where: { id }, data: { deletedAt: new Date() } });
 
   return ctx.json({ message: "Brand deleted successfully" });
 };

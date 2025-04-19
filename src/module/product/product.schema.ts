@@ -14,8 +14,6 @@ const GetProductSchema = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
   deletedAt: z.date().nullable().optional(),
-  createdBy: z.string().nullable().optional(),
-  deletedBy: z.string().nullable().optional(),
 });
 
 const CreateProductSchema = z.object({

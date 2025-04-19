@@ -7,8 +7,6 @@ model Brand {
   createdAt        DateTime                      @default(now())
   updatedAt        DateTime                      @updatedAt
   deletedAt        DateTime?
-  createdBy        String?
-  deletedBy        String?
   products         Product[]
 }
 
@@ -19,8 +17,6 @@ model Category {
   createdAt        DateTime                      @default(now())
   updatedAt        DateTime                      @updatedAt
   deletedAt        DateTime?
-  createdBy        String?
-  deletedBy        String?
   products         Product[]
 }
 
@@ -39,9 +35,6 @@ model Product {
   expiryDate        DateTime?
   createdAt         DateTime                     @default(now())
   updatedAt         DateTime                     @updatedAt
-  deletedAt         DateTime?
-  createdBy         String?
-  deletedBy         String?
   
   @@index([brandId], name: "brandId")
   @@index([categoryId], name: "categoryId")

@@ -53,8 +53,6 @@ model Brand {
   createdAt        DateTime                      @default(now())
   updatedAt        DateTime                      @updatedAt
   deletedAt        DateTime?
-  createdBy        String?
-  deletedBy        String?
   products         Product[]
 }
 
@@ -65,8 +63,6 @@ model Category {
   createdAt        DateTime                      @default(now())
   updatedAt        DateTime                      @updatedAt
   deletedAt        DateTime?
-  createdBy        String?
-  deletedBy        String?
   products         Product[]
 }
 
@@ -85,15 +81,11 @@ model Product {
   expiryDate        DateTime?
   createdAt         DateTime                     @default(now())
   updatedAt         DateTime                     @updatedAt
-  deletedAt         DateTime?
-  createdBy         String?
-  deletedBy         String?
   
   @@index([brandId], name: "brandId")
   @@index([categoryId], name: "categoryId")
   @@index([sku], name: "sku")
 }
-
 enum Role {
   ADMIN
   PATIENT
@@ -141,68 +133,63 @@ enum Gender {
 }
 
 model User {
-  id                             String                            @id @default(cuid())
-  firstName                      String
-  lastName                       String
-  email                          String                            @unique
-  phone                          String?
-  password                       String
-  dateOfBirth                    DateTime?
-  gender                         Gender?
-  salary                         Float?
-  salaryCurrency                 String?
-  salaryType                     SalaryType?
-  profilePicture                 String?
-  city                           String?
-  country                        String?
-  zipCode                        String?
-  addressLine1                   String?
-  addressLine2                   String?
-  role                           Role                              @default(PATIENT)
-  status                         AccountStatus                     @default(PENDING)
-  verified                       Boolean                           @default(false)
-  createdAt                      DateTime                          @default(now())
-  updatedAt                      DateTime                          @updatedAt
-  deletedAt                      DateTime?
-  createdBy                      String?                           
-  createdById                    String?
-  deletedBy                      String?                           
-  sessions                       Session[]  
-  verificationCodes              VerificationCode[]
-  deletedSessions                Session[]                          @relation("DeletedBy")
-  deletedVerificationCodes       VerificationCode[]                 @relation("DeletedBy")
+  id                        String                 @id @default(cuid())
+  firstName                 String
+  lastName                  String
+  email                     String                 @unique
+  phone                     String?
+  password                  String
+  dateOfBirth               DateTime?
+  gender                    Gender?
+  salary                    Float?
+  salaryCurrency            String?
+  salaryType                SalaryType?
+  profilePicture            String?
+  city                      String?
+  country                   String?
+  zipCode                   String?
+  addressLine1              String?
+  addressLine2              String?
+  role                      Role                   @default(PATIENT)
+  status                    AccountStatus          @default(PENDING)
+  verified                  Boolean                @default(false)
+  createdAt                 DateTime               @default(now())
+  updatedAt                 DateTime               @updatedAt
+  deletedAt                 DateTime?
+
+  sessions                  Session[]              
+  verificationCodes         VerificationCode[]     @relation("ActiveCodes")
+
+  VerificationCode VerificationCode[]
 }
 
 model Session {
-  id                              String                             @id @default(cuid())
-  userId                          String?
-  user                            User?                              @relation(fields: [userId], references: [id], onDelete: SetNull)
-  ipAddress                       String?
-  userAgent                       String?
-  attempt                         LoginAttemptStatus                 @default(SUCCESS)
-  loginAt                         DateTime                           @default(now())
-  expiresAt                       DateTime?
-  createdAt                       DateTime                           @default(now())
-  updatedAt                       DateTime                           @updatedAt
-  deletedAt                       DateTime?
-  deletedBy                       User?                              @relation("DeletedBy", fields: [deletedById], references: [id])
-  deletedById                     String?
+  id                        String                 @id @default(cuid())
+  userId                    String?
+  user                      User?                  @relation(fields: [userId], references: [id], onDelete: SetNull)
+  ipAddress                 String?
+  userAgent                 String?
+  attempt                   LoginAttemptStatus     @default(SUCCESS)
+  loginAt                   DateTime               @default(now())
+  expiresAt                 DateTime?
+  createdAt                 DateTime               @default(now())
+  updatedAt                 DateTime               @updatedAt
+  deletedAt                 DateTime?
 }
-
 
 model VerificationCode {
-  id                               String                            @id @default(cuid())
-  userId                           String
-  user                             User                              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  status                           VerificationCodeStatus            @default(PENDING)
-  type                             VerificationCodeType              @default(ACCOUNT_ACTIVATION)
-  code                             String
-  expiresAt                        DateTime
-  verifiedAt                       DateTime?
-  createdAt                        DateTime                           @default(now())
-  updatedAt                        DateTime                           @updatedAt
-  deletedAt                        DateTime?
-  deletedBy                        User?                              @relation("DeletedBy", fields: [deletedById], references: [id])
-  deletedById                      String?
-}
+  id                        String                 @id @default(cuid())
+  userId                    String
+  user                      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status                    VerificationCodeStatus @default(PENDING)
+  type                      VerificationCodeType   @default(ACCOUNT_ACTIVATION)
+  code                      String
+  expiresAt                 DateTime
+  verifiedAt                DateTime?
+  createdAt                 DateTime               @default(now())
+  updatedAt                 DateTime               @updatedAt
+  deletedAt                 DateTime?
+  User                      User[] @relation("ActiveCodes")
 
+  @@map("verification_codes")
+}

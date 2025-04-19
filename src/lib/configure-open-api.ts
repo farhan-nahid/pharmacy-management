@@ -17,7 +17,7 @@ export function configureOpenApi(app: AppOpenAPI) {
     "/reference",
     apiReference({
       theme: "purple",
-      layout: "classic",
+      // layout: "classic",
       hideDownloadButton: true,
       servers: [
         {
