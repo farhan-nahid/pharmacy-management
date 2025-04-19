@@ -10,6 +10,16 @@ model Brand {
   products         Product[]
 }
 
+model Group {
+  id               String                        @id @default(cuid())
+  name             String                        @unique
+  description      String?
+  createdAt        DateTime                      @default(now())
+  updatedAt        DateTime                      @updatedAt
+  deletedAt        DateTime?
+  products         Product[]
+}
+
 model Category {
   id               String                        @id @default(cuid())
   name             String                        @unique
@@ -31,6 +41,8 @@ model Product {
   brand             Brand?                       @relation(fields: [brandId], references: [id])
   brandId           String?
   category          Category?                    @relation(fields: [categoryId], references: [id])
+  groupId           String?
+  group             Group?                      @relation(fields: [groupId], references: [id])
   categoryId        String?
   expiryDate        DateTime?
   createdAt         DateTime                     @default(now())
@@ -39,4 +51,5 @@ model Product {
   @@index([brandId], name: "brandId")
   @@index([categoryId], name: "categoryId")
   @@index([sku], name: "sku")
+  @@index([groupId], name: "groupId")
 }
