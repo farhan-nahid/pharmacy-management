@@ -57,24 +57,6 @@ RUN npx prisma generate
 # Copy the rest of the application files
 COPY . .
 
-# Build the application
-RUN pnpm build
-
-# Runtime Stage
-FROM node:22.10-alpine3.20 AS runtime
-
-WORKDIR /app
-
-# Copy only necessary files from the builder image
-COPY --from=builder /build/dist ./dist
-COPY --from=builder /build/prisma ./prisma
-COPY package.json pnpm-lock.yaml ./
-
-# Install only production dependencies
-RUN npm i -g pnpm && pnpm install --prod --frozen-lockfile
-
-ENV NODE_ENV=production
-
 # Expose port and set the command to run the app
 EXPOSE 8080
-CMD ["pnpm", "start"]
+CMD ["pnpm", "dev"]
