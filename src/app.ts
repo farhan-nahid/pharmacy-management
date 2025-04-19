@@ -21,7 +21,7 @@ routes.forEach(route => app.route("/api", route));
 app.use(
   "*",
   cors({
-    origin: ["http://localhost:3000", "http://localhost:5173"],
+    origin: ["http://localhost:3000"],
     allowHeaders: ["Content-Type", "Authorization"],
     allowMethods: ["POST", "GET", "OPTIONS", "PATCH", "DELETE"],
     exposeHeaders: ["Content-Length"],
