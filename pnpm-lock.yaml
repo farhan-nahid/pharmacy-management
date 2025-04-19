@@ -24,8 +24,8 @@ importers:
         specifier: ^0.5.166
         version: 0.5.166(hono@4.6.17)
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       bcryptjs:
         specifier: ^3.0.2
         version: 3.0.2
@@ -162,13 +162,13 @@ packages:
     resolution: {integrity: sha512-Ed61U6XJc3CVRfkERJWDz4dJwKe7iLmmJsbOGu9wSloNSFttHV0I8g6UAgb7qnK5ly5bGLPd4oXZlxCdANBOWQ==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/parser@7.26.5':
-    resolution: {integrity: sha512-SRJ4jYmXRqV1/Xc+TIVG84WjHBXKlxO9sHQnA2Pf12QQEAp1LOh6kDzNHXcUnbH1QI0FDoPPVOt+vyUDucxpaw==}
+  '@babel/parser@7.27.0':
+    resolution: {integrity: sha512-iaepho73/2Pz7w2eMS0Q5f83+0RKI7i4xmiYeBmDzfRVbQtTOG7Ts0S4HzJVsTMGI9keU8rNfuZr8DKfSt7Yyg==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  '@babel/types@7.26.5':
-    resolution: {integrity: sha512-L6mZmwFDK6Cjh1nRCLXpa6no13ZIioJDz7mdkzHv399pThrTa/k0nUlNaenOeh2kWu/iaOQYElEpKPUswUa9Vg==}
+  '@babel/types@7.27.0':
+    resolution: {integrity: sha512-H45s8fVLYjbhFH62dIJ3WtmJ6RSPt/3DRO0ZcT2SUiYiQyz3BLVb9ADEnLl91m74aQPS3AzzeajZHYOalWe3bg==}
     engines: {node: '>=6.9.0'}
 
   '@clack/core@0.4.1':
@@ -650,8 +650,8 @@ packages:
     resolution: {integrity: sha512-kNOjDqAh7px0XWNI+4QbzoiR/nTkHAWNud2uvnJquD1/x5a7EQZMJT0AczqK0Qn67oY/TTQ1LbUKajZpp3I9tQ==}
     engines: {node: '>=8.0.0'}
 
-  axios@1.8.1:
-    resolution: {integrity: sha512-NN+fvwH/kV01dYUQ3PTOZns4LWtWhOFCAhQ/pHb88WQ1hNe5V/dvFwc4VJcDL11LT9xSX0QtsR8sWUuyOuOq7g==}
+  axios@1.8.2:
+    resolution: {integrity: sha512-ls4GYBm5aig9vWx8AWDSGLpnpDQRtWAfrjU+EuytuODrFBkqesN2RkOQCBzrA1RQNHw1SmRMSDDDSwzNAYQ6Rg==}
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -1573,8 +1573,8 @@ packages:
     resolution: {integrity: sha512-+MrqnJRtxdF+xngFfUUkIMQrUUL0KsxbADUkn23Z/4ibGg192Q+z+CQyiYwvWTsYjJygmMR8+w3ZDa98Zh6ESg==}
     engines: {node: '>=12.0.0'}
 
-  nanoid@3.3.8:
-    resolution: {integrity: sha512-WNLf5Sd8oZxOm+TzppcYk8gVOgP+l58xNy58D0nbUnOxOWRWvlcCV4kUF7ltmI6PsrLl/BgKEyS4mqsGChFN0w==}
+  nanoid@3.3.11:
+    resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
@@ -1713,8 +1713,8 @@ packages:
     resolution: {integrity: sha512-Q8qQfPiZ+THO/3ZrOrO0cJJKfpYCagtMUkXbnEfmgUjwXg6z/WBeOyS9APBBPCTSiDV+s4SwQGu8yFsiMRIudg==}
     engines: {node: '>=4'}
 
-  postcss@8.5.1:
-    resolution: {integrity: sha512-6oz2beyjc5VMn/KV1pPw8fliQkhBXrVn1Z3TVyqZxU8kZpzEKhBdmCFqI6ZbmGtamQvQGuU1sgPTk8ZrXDD7jQ==}
+  postcss@8.5.3:
+    resolution: {integrity: sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==}
     engines: {node: ^10 || ^12 || >=14}
 
   prelude-ls@1.2.1:
@@ -2137,11 +2137,11 @@ snapshots:
 
   '@babel/helper-validator-identifier@7.25.9': {}
 
-  '@babel/parser@7.26.5':
+  '@babel/parser@7.27.0':
     dependencies:
-      '@babel/types': 7.26.5
+      '@babel/types': 7.27.0
 
-  '@babel/types@7.26.5':
+  '@babel/types@7.27.0':
     dependencies:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
@@ -2534,7 +2534,7 @@ snapshots:
 
   '@vue/compiler-core@3.5.13':
     dependencies:
-      '@babel/parser': 7.26.5
+      '@babel/parser': 7.27.0
       '@vue/shared': 3.5.13
       entities: 4.5.0
       estree-walker: 2.0.2
@@ -2547,14 +2547,14 @@ snapshots:
 
   '@vue/compiler-sfc@3.5.13':
     dependencies:
-      '@babel/parser': 7.26.5
+      '@babel/parser': 7.27.0
       '@vue/compiler-core': 3.5.13
       '@vue/compiler-dom': 3.5.13
       '@vue/compiler-ssr': 3.5.13
       '@vue/shared': 3.5.13
       estree-walker: 2.0.2
       magic-string: 0.30.17
-      postcss: 8.5.1
+      postcss: 8.5.3
       source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.5.13':
@@ -2598,7 +2598,7 @@ snapshots:
 
   atomic-sleep@1.0.0: {}
 
-  axios@1.8.1:
+  axios@1.8.2:
     dependencies:
       follow-redirects: 1.15.9
       form-data: 4.0.2
@@ -3758,7 +3758,7 @@ snapshots:
 
   mylas@2.1.13: {}
 
-  nanoid@3.3.8: {}
+  nanoid@3.3.11: {}
 
   natural-compare@1.4.0: {}
 
@@ -3907,9 +3907,9 @@ snapshots:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
 
-  postcss@8.5.1:
+  postcss@8.5.3:
     dependencies:
-      nanoid: 3.3.8
+      nanoid: 3.3.11
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
