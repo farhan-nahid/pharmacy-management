@@ -34,7 +34,7 @@ export const createUpload = createRoute({
         type: "object",
         properties: {
           message: { type: "string" },
-          data: { type: "object" },
+          data: { type: "object", properties: { url: { type: "string" } } },
         },
       },
     },
