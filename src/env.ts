@@ -37,6 +37,9 @@ const EnvSchema = z.object({
   SMTP_USER: z.string(),
   SMTP_PASS: z.string(),
   SMTP_FROM: z.string(),
+  CLOUDINARY_CLOUD_NAME: z.string(),
+  CLOUDINARY_API_KEY: z.string(),
+  CLOUDINARY_API_SECRET: z.string(),
 });
 
 // eslint-disable-next-line node/no-process-env
