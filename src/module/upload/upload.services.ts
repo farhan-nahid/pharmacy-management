@@ -25,9 +25,9 @@ const createUpload: AppRouteHandler<UploadRoutes["createUpload"]> = async (ctx) 
   const base64 = buffer.toString("base64");
   const dataUri = `data:${file.type};base64,${base64}`;
 
-  const { url, secure_url } = await cloudinary.uploader.upload(dataUri, { folder });
+  const { secure_url: url } = await cloudinary.uploader.upload(dataUri, { folder });
 
-  return ctx.json({ message: "Upload file successfully", data: { url, secure_url } }, 201);
+  return ctx.json({ message: "Upload file successfully", data: { url } }, 201);
 };
 
 export { createUpload };
