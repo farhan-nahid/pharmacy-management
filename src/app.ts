@@ -13,12 +13,10 @@ import product from "./module/product";
 import upload from "./module/upload";
 
 const app = createApp();
-configureOpenApi(app);
-
 app.use(
   "*",
   cors({
-    origin: ["http://localhost:3000"],
+    origin: "*",
     allowHeaders: ["Content-Type", "Authorization"],
     allowMethods: ["POST", "GET", "OPTIONS", "PATCH", "DELETE"],
     exposeHeaders: ["Content-Length"],
@@ -27,8 +25,12 @@ app.use(
   }),
 );
 
+configureOpenApi(app);
+
 const routes = [index, auth, brand, category, group, product, email, upload] as const;
-routes.forEach(route => app.route("/api", route));
+for (const route of routes) {
+  app.route("/api", route);
+}
 
 export type AppType = typeof routes[number];
 export { app };

@@ -2,6 +2,7 @@ import adminRegistration from "./admin-registration";
 import changePassword from "./change-password";
 import deleteAccount from "./delete-account";
 import getProfile from "./get-profile";
+import getUsers from "./get-users";
 import login from "./login";
 import patientRegistration from "./patient-registration";
 import pharmacistRegistration from "./pharmacist-registration";
@@ -12,4 +13,4 @@ import userUpdate from "./user-update";
 import verifyEmail from "./verify-email";
 import verifyToken from "./verify-token";
 
-export { adminRegistration, changePassword, deleteAccount, getProfile, login, patientRegistration, pharmacistRegistration, resetPassword, resetPasswordRequest, updateProfile, userUpdate, verifyEmail, verifyToken };
+export { adminRegistration, changePassword, deleteAccount, getProfile, getUsers, login, patientRegistration, pharmacistRegistration, resetPassword, resetPasswordRequest, updateProfile, userUpdate, verifyEmail, verifyToken };

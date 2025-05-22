@@ -3,7 +3,7 @@ import { Role } from "@prisma/client";
 
 import { authMiddleware, roleMiddleware } from "@/middlewares/auth";
 
-import { AdminRegisterSchema, changePasswordSchema, EmailVerificationSchema, resetPasswordRequestSchema, resetPasswordSchema, UpdateProfileSchema, UserLoginSchema, UserProfileSchema, UserRegisterSchema } from "./auth.schema";
+import { AdminRegisterSchema, changePasswordSchema, EmailVerificationSchema, getUserQuerySchema, resetPasswordRequestSchema, resetPasswordSchema, UpdateProfileSchema, UserLoginSchema, UserProfileSchema, UserRegisterSchema } from "./auth.schema";
 
 const tags = ["Auth"];
 
@@ -434,6 +434,36 @@ export const getProfile = createRoute({
   },
 });
 
+export const getUsers = createRoute({
+  tags,
+  summary: "Get all users",
+  description: "Get a list of all users.",
+  method: "get",
+  path: "/auth/users",
+  middleware: [authMiddleware(), roleMiddleware(["ADMIN"])] as const,
+  request: {
+    query: getUserQuerySchema,
+    headers: z.object({
+      // Authorization: z.string().describe("Bearer token"),
+    }),
+  },
+  responses: {
+    200: {
+      description: "Successful retrieval",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z.string(),
+            data: z.array(
+              UserProfileSchema,
+            ),
+          }),
+        },
+      },
+    },
+  },
+});
+
 export const verifyEmail = createRoute({
   tags,
   summary: "Verify user email",
@@ -762,6 +792,7 @@ export interface AuthRoutes {
   userUpdate: typeof userUpdate;
   updateProfile: typeof updateProfile;
   getProfile: typeof getProfile;
+  getUsers: typeof getUsers;
   verifyEmail: typeof verifyEmail;
   verifyToken: typeof verifyToken;
   resetPasswordRequest: typeof resetPasswordRequest;

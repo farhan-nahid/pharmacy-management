@@ -7,7 +7,7 @@ const AdminRegisterSchema = z.object({
   email: z.string().email(),
   firstName: z.string().min(2).max(255),
   lastName: z.string().min(2).max(255),
-  phone: z.string().min(10).max(15),
+  phone: z.string().min(10).max(25),
   password: z.string().min(6).max(255),
 });
 
@@ -15,7 +15,7 @@ const UserRegisterSchema = z.object({
   email: z.string().email(),
   firstName: z.string().min(2).max(255),
   lastName: z.string().min(2).max(255),
-  phone: z.string().min(10).max(15),
+  phone: z.string().min(10).max(25),
   password: z.string().min(6).max(255),
   dateOfBirth: z.date().optional(),
   gender: z.nativeEnum(Gender).optional(),
@@ -34,7 +34,7 @@ const UserUpdateSchema = z.object({
   email: z.string().email().optional(),
   firstName: z.string().min(2).max(255).optional(),
   lastName: z.string().min(2).max(255).optional(),
-  phone: z.string().min(10).max(15).optional(),
+  phone: z.string().min(10).max(25).optional(),
   dateOfBirth: z.date().optional(),
   gender: z.nativeEnum(Gender).optional(),
   salary: z.number().optional(),
@@ -57,7 +57,7 @@ const UpdateProfileSchema = z.object({
   email: z.string().email().optional(),
   firstName: z.string().min(2).max(255).optional(),
   lastName: z.string().min(2).max(255).optional(),
-  phone: z.string().min(10).max(15).optional(),
+  phone: z.string().min(10).max(25).optional(),
 });
 
 const EmailVerificationSchema = z.object({
@@ -70,7 +70,7 @@ const UserProfileSchema = z.object({
   firstName: z.string().min(2).max(255),
   lastName: z.string().min(2).max(255),
   email: z.string().email(),
-  phone: z.string().min(10).max(15).optional(),
+  phone: z.string().min(10).max(25).optional(),
   role: z.nativeEnum(Role),
   status: z.nativeEnum(AccountStatus),
   verified: z.boolean(),
@@ -82,6 +82,10 @@ const UserProfileSchema = z.object({
     loginAt: z.date(),
     expiresAt: z.date().optional(),
   })).optional(),
+});
+
+const getUserQuerySchema = z.object({
+  role: z.nativeEnum(Role).optional(),
 });
 
 const VerifyTokenSchema = z.object({
@@ -118,4 +122,4 @@ export interface TokenUser {
   role: string;
 }
 
-export { AdminRegisterSchema, changePasswordSchema, EmailVerificationSchema, resetPasswordRequestSchema, resetPasswordSchema, UpdateProfileSchema, UserLoginSchema, UserProfileSchema, UserRegisterSchema, UserUpdateSchema, VerifyTokenSchema };
+export { AdminRegisterSchema, changePasswordSchema, EmailVerificationSchema, getUserQuerySchema, resetPasswordRequestSchema, resetPasswordSchema, UpdateProfileSchema, UserLoginSchema, UserProfileSchema, UserRegisterSchema, UserUpdateSchema, VerifyTokenSchema };
