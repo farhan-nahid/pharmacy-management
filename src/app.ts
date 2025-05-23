@@ -9,6 +9,7 @@ import category from "./module/category";
 import email from "./module/email";
 import group from "./module/group";
 import index from "./module/index.route";
+import notification from "./module/notification";
 import product from "./module/product";
 import upload from "./module/upload";
 
@@ -27,7 +28,7 @@ app.use(
 
 configureOpenApi(app);
 
-const routes = [index, auth, brand, category, group, product, email, upload] as const;
+const routes = [index, auth, brand, category, group, product, email, upload, notification] as const;
 for (const route of routes) {
   app.route("/api", route);
 }
