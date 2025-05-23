@@ -2,34 +2,36 @@ import type { Role } from "@prisma/client";
 
 import { createMiddleware } from "hono/factory";
 
+import { verifyToken } from "@/utils/verify-token";
+
 function authMiddleware() {
   return createMiddleware(async (c, next) => {
-    // const token = c.req.header("Authorization");
+    const token = c.req.header("Authorization");
 
-    // if (!token) {
-    //   return c.json({ error: "Unauthorized" }, 401);
-    // }
+    if (!token) {
+      return c.json({ error: "Unauthorized" }, 401);
+    }
 
-    // const [, tokenValue] = token.split("Bearer ");
+    const [, tokenValue] = token.split("Bearer ");
 
-    // if (!tokenValue) {
-    //   return c.json({ error: "Unauthorized" }, 401);
-    // }
+    if (!tokenValue) {
+      return c.json({ error: "Unauthorized" }, 401);
+    }
 
-    // const jwtPayload = await verifyToken(tokenValue);
+    const jwtPayload = await verifyToken(tokenValue);
 
-    // c.set("user", jwtPayload);
+    c.set("user", jwtPayload);
     await next();
   });
 }
 
-function roleMiddleware(_roles: Role[]) {
+function roleMiddleware(roles: Role[]) {
   return createMiddleware(async (ctx, next) => {
-    // const user = ctx.get("user");
+    const user = ctx.get("user");
 
-    // if (!user || !roles.includes(user.role)) {
-    //   return ctx.json({ error: "Forbidden" }, 403);
-    // }
+    if (!user || !roles.includes(user.role)) {
+      return ctx.json({ error: "Forbidden" }, 403);
+    }
 
     await next();
   });

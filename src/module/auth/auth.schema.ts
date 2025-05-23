@@ -60,6 +60,25 @@ const UpdateProfileSchema = z.object({
   phone: z.string().min(10).max(25).optional(),
 });
 
+const UpdateUserSchema = z.object({
+  email: z.string().email().optional(),
+  firstName: z.string().min(2).max(255).optional(),
+  lastName: z.string().min(2).max(255).optional(),
+  phone: z.string().min(10).max(25).optional(),
+  dateOfBirth: z.date().optional(),
+  status: z.nativeEnum(AccountStatus).optional(),
+  gender: z.nativeEnum(Gender).optional(),
+  salary: z.number().optional(),
+  salaryCurrency: z.string().optional(),
+  salaryType: z.nativeEnum(SalaryType).optional(),
+  profilePicture: z.string().optional(),
+  city: z.string().optional(),
+  country: z.string().optional(),
+  zipCode: z.string().optional(),
+  addressLine1: z.string().optional(),
+  addressLine2: z.string().optional(),
+});
+
 const EmailVerificationSchema = z.object({
   code: z.string().length(6),
   email: z.string().email(),
@@ -122,4 +141,4 @@ export interface TokenUser {
   role: string;
 }
 
-export { AdminRegisterSchema, changePasswordSchema, EmailVerificationSchema, getUserQuerySchema, resetPasswordRequestSchema, resetPasswordSchema, UpdateProfileSchema, UserLoginSchema, UserProfileSchema, UserRegisterSchema, UserUpdateSchema, VerifyTokenSchema };
+export { AdminRegisterSchema, changePasswordSchema, EmailVerificationSchema, getUserQuerySchema, resetPasswordRequestSchema, resetPasswordSchema, UpdateProfileSchema, UpdateUserSchema, UserLoginSchema, UserProfileSchema, UserRegisterSchema, UserUpdateSchema, VerifyTokenSchema };
