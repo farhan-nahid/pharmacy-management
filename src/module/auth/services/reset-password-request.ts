@@ -33,6 +33,16 @@ const resetPasswordRequest: AppRouteHandler<AuthRoutes["resetPasswordRequest"]> 
     source: "PASSWORD_RESET",
   });
 
+  await prisma.notification.create({
+    data: {
+      userId: user.id,
+      title: "Password reset request",
+      message: "A password reset request has been initiated. Please check your email.",
+      category: "USER",
+      priority: "MEDIUM",
+    },
+  });
+
   return ctx.json({ message: "Verification email sent successfully" }, 200);
 };
 

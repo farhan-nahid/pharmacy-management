@@ -19,6 +19,16 @@ const userUpdate: AppRouteHandler<AuthRoutes["userUpdate"]> = async (ctx) => {
 
   await prisma.user.update({ where: { id: userId, deletedAt: null }, data: payload });
 
+  await prisma.notification.create({
+    data: {
+      userId,
+      title: "User updated successfully",
+      message: "The user has been updated successfully.",
+      category: "USER",
+      priority: "MEDIUM",
+    },
+  });
+
   return ctx.json({ message: "User updated successfully" });
 };
 

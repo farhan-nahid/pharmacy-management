@@ -9,6 +9,16 @@ const deleteUser: AppRouteHandler<AuthRoutes["deleteUser"]> = async (ctx) => {
 
   await prisma.user.update({ where: { id }, data: { deletedAt: new Date() } });
 
+  await prisma.notification.create({
+    data: {
+      userId: id,
+      title: "User deleted successfully",
+      message: "The user has been deleted successfully.",
+      category: "USER",
+      priority: "MEDIUM",
+    },
+  });
+
   return ctx.json({ message: "User deleted successfully" });
 };
 

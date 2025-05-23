@@ -55,6 +55,16 @@ const login: AppRouteHandler<AuthRoutes["login"]> = async (ctx) => {
 
   await loginSessions({ userId: user.id, userAgent, ipAddress });
 
+  await prisma.notification.create({
+    data: {
+      userId: user.id,
+      title: "Login successful",
+      message: "You have logged in successfully.",
+      category: "USER",
+      priority: "MEDIUM",
+    },
+  });
+
   return ctx.json({ message: "Logged in successfully", token: generateToken(user) }, 200);
 };
 

@@ -56,6 +56,16 @@ const verifyEmail: AppRouteHandler<AuthRoutes["verifyEmail"]> = async (ctx) => {
     source: "ACCOUNT_ACTIVATION",
   });
 
+  await prisma.notification.create({
+    data: {
+      userId: user.id,
+      title: "Email verified",
+      message: "Your email has been verified successfully.",
+      category: "USER",
+      priority: "MEDIUM",
+    },
+  });
+
   return ctx.json({ message: "Email verified successfully", token: generateToken(user) });
 };
 

@@ -69,7 +69,8 @@ model User {
   updatedAt                 DateTime               @updatedAt
   deletedAt                 DateTime?
 
-  sessions                  Session[]              
+  sessions                  Session[]   
+  notifications             Notification[]                        
   verificationCodes         VerificationCode[]     @relation("ActiveCodes")
 
   VerificationCode VerificationCode[]

@@ -33,6 +33,16 @@ const resendVerificationCode: AppRouteHandler<AuthRoutes["resendVerificationCode
     source: "USER_VERIFICATION",
   });
 
+  await prisma.notification.create({
+    data: {
+      userId: user.id,
+      title: "Verification code resent",
+      message: "A new verification code has been sent to your email.",
+      category: "USER",
+      priority: "MEDIUM",
+    },
+  });
+
   return ctx.json({ message: "Verification email sent successfully" }, 200);
 };
 
