@@ -3,7 +3,7 @@ import { Role } from "@prisma/client";
 
 import { authMiddleware, roleMiddleware } from "@/middlewares/auth";
 
-import { AdminRegisterSchema, changePasswordSchema, EmailVerificationSchema, resetPasswordRequestSchema, resetPasswordSchema, UpdateProfileSchema, UserLoginSchema, UserProfileSchema, UserRegisterSchema } from "./auth.schema";
+import { AdminRegisterSchema, changePasswordSchema, EmailVerificationSchema, getUserQuerySchema, resetPasswordRequestSchema, resetPasswordSchema, UpdateProfileSchema, UpdateUserSchema, UserLoginSchema, UserProfileSchema, UserRegisterSchema } from "./auth.schema";
 
 const tags = ["Auth"];
 
@@ -274,7 +274,7 @@ export const userUpdate = createRoute({
     body: {
       content: {
         "application/json": {
-          schema: UpdateProfileSchema,
+          schema: UpdateUserSchema,
           example: {
             email: "john.doe@example.com",
             password: "yourPassword",
@@ -434,6 +434,36 @@ export const getProfile = createRoute({
   },
 });
 
+export const getUsers = createRoute({
+  tags,
+  summary: "Get all users",
+  description: "Get a list of all users.",
+  method: "get",
+  path: "/auth/users",
+  middleware: [authMiddleware(), roleMiddleware(["ADMIN"])] as const,
+  request: {
+    query: getUserQuerySchema,
+    headers: z.object({
+      // Authorization: z.string().describe("Bearer token"),
+    }),
+  },
+  responses: {
+    200: {
+      description: "Successful retrieval",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z.string(),
+            data: z.array(
+              UserProfileSchema,
+            ),
+          }),
+        },
+      },
+    },
+  },
+});
+
 export const verifyEmail = createRoute({
   tags,
   summary: "Verify user email",
@@ -556,6 +586,60 @@ export const resetPasswordRequest = createRoute({
   description: "Request a password reset.",
   method: "post",
   path: "/auth/reset-password-request",
+  request: {
+    body: {
+      content: {
+        "application/json": {
+          schema: resetPasswordRequestSchema,
+          example: {
+            email: "john.doe@example.com",
+          },
+        },
+      },
+      description: "Email for password reset",
+    },
+  },
+
+  responses: {
+    200: {
+      description: "Successful request",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+    400: {
+      description: "Bad request",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+    500: {
+      description: "Internal server error",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+  },
+});
+
+export const resendVerificationCode = createRoute({
+  tags,
+  summary: "Resend verification code",
+  description: "Resend the verification code to the user's email.",
+  method: "post",
+  path: "/auth/resend-verification-code",
   request: {
     body: {
       content: {
@@ -754,6 +838,45 @@ export const deleteAccount = createRoute({
   },
 });
 
+export const deleteUser = createRoute({
+  tags,
+  summary: "Delete user",
+  description: "Delete a user.",
+  method: "delete",
+  path: "/auth/user/{id}",
+  middleware: [authMiddleware(), roleMiddleware(["ADMIN"])] as const,
+  request: {
+    params: z.object({
+      id: z.string().describe("User ID"),
+    }),
+    headers: z.object({
+      Authorization: z.string().describe("Bearer token"),
+    }),
+  },
+  responses: {
+    200: {
+      description: "Successful deletion",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+    500: {
+      description: "Internal server error",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+  },
+});
+
 export interface AuthRoutes {
   login: typeof login;
   adminRegistration: typeof adminRegistration;
@@ -762,10 +885,13 @@ export interface AuthRoutes {
   userUpdate: typeof userUpdate;
   updateProfile: typeof updateProfile;
   getProfile: typeof getProfile;
+  getUsers: typeof getUsers;
   verifyEmail: typeof verifyEmail;
   verifyToken: typeof verifyToken;
+  resendVerificationCode: typeof resendVerificationCode;
   resetPasswordRequest: typeof resetPasswordRequest;
   resetPassword: typeof resetPassword;
   changePassword: typeof changePassword;
   deleteAccount: typeof deleteAccount;
+  deleteUser: typeof deleteUser;
 }

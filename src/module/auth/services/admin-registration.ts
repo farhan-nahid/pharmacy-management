@@ -43,6 +43,16 @@ const adminRegistration: AppRouteHandler<AuthRoutes["adminRegistration"]> = asyn
     source: "USER_VERIFICATION",
   });
 
+  await prisma.notification.create({
+    data: {
+      userId: user.id,
+      title: "Welcome to the Admin Panel",
+      message: "Your account has been created successfully. Please verify your email.",
+      category: "USER",
+      priority: "MEDIUM",
+    },
+  });
+
   return ctx.json({ message: "User registered successfully" }, 201);
 };
 

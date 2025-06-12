@@ -44,6 +44,41 @@ model Email {
   source     EmailSource
   sendAt     DateTime @default(now())
 }
+enum NotificationCategory {
+  SYSTEM
+  USER
+  ERROR
+  INVENTORY
+  ORDER
+  PAYMENT
+  PROMOTION
+  ACCOUNT
+  SECURITY
+  PRESCRIPTION
+  REFUND
+  DELIVERY
+}
+
+enum NotificationPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+
+model Notification {
+  id          String   @id @default(cuid())
+  title       String
+  message     String
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  read        Boolean  @default(false)
+  category    NotificationCategory
+  priority    NotificationPriority
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+}
 model Brand {
   id               String                        @id @default(cuid())
   name             String                        @unique
@@ -171,7 +206,8 @@ model User {
   updatedAt                 DateTime               @updatedAt
   deletedAt                 DateTime?
 
-  sessions                  Session[]              
+  sessions                  Session[]   
+  notifications             Notification[]                        
   verificationCodes         VerificationCode[]     @relation("ActiveCodes")
 
   VerificationCode VerificationCode[]

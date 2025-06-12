@@ -34,6 +34,16 @@ const changePassword: AppRouteHandler<AuthRoutes["changePassword"]> = async (ctx
     source: "CHANGE_PASSWORD",
   });
 
+  await prisma.notification.create({
+    data: {
+      userId: user.id,
+      title: "Password changed successfully",
+      message: "Your password has been changed successfully.",
+      category: "USER",
+      priority: "MEDIUM",
+    },
+  });
+
   return ctx.json({ message: "Your password has been changed successfully" }, 200);
 };
 

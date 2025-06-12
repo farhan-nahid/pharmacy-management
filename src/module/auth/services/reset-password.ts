@@ -50,6 +50,21 @@ const resetPassword: AppRouteHandler<AuthRoutes["resetPassword"]> = async (ctx) 
     source: "PASSWORD_RESET",
   });
 
+  await prisma.verificationCode.update({
+    where: { id: verificationCode.id },
+    data: { status: "USED" },
+  });
+
+  await prisma.notification.create({
+    data: {
+      userId: user.id,
+      title: "Password reset successful",
+      message: "Your password has been reset successfully.",
+      category: "USER",
+      priority: "MEDIUM",
+    },
+  });
+
   return ctx.json({ message: "Your password has been reset successfully" }, 200);
 };
 

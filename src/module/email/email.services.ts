@@ -11,7 +11,7 @@ export const sendEmail: AppRouteHandler<EmailSendRoute> = async (ctx) => {
   const payload = ctx.req.valid("json");
   const { recipient, subject, body, source, sender } = payload;
 
-  const from = sender || env.SMTP_FROM;
+  const from = `Pharmacy Management System <${sender || env.SMTP_FROM}>`;
 
   const emailOption = { from, to: recipient, subject, text: body };
 

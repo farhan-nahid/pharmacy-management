@@ -9,7 +9,7 @@ import { generateVerificationCode } from "@/utils/generate-verification-code";
 
 import type { AuthRoutes } from "../auth.routes";
 
-const resetPasswordRequest: AppRouteHandler<AuthRoutes["resetPasswordRequest"]> = async (ctx) => {
+const resendVerificationCode: AppRouteHandler<AuthRoutes["resendVerificationCode"]> = async (ctx) => {
   const payload = ctx.req.valid("json");
   const { email } = payload;
 
@@ -28,16 +28,16 @@ const resetPasswordRequest: AppRouteHandler<AuthRoutes["resetPasswordRequest"]> 
 
   await backendRequest.post("/api/email/send", {
     recipient: user.email,
-    subject: "Reset your password",
+    subject: "Verify your email",
     body: `Your verification code is ${code}`,
-    source: "PASSWORD_RESET",
+    source: "USER_VERIFICATION",
   });
 
   await prisma.notification.create({
     data: {
       userId: user.id,
-      title: "Password reset request",
-      message: "A password reset request has been initiated. Please check your email.",
+      title: "Verification code resent",
+      message: "A new verification code has been sent to your email.",
       category: "USER",
       priority: "MEDIUM",
     },
@@ -46,4 +46,4 @@ const resetPasswordRequest: AppRouteHandler<AuthRoutes["resetPasswordRequest"]> 
   return ctx.json({ message: "Verification email sent successfully" }, 200);
 };
 
-export default resetPasswordRequest;
+export default resendVerificationCode;

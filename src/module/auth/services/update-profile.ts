@@ -24,6 +24,16 @@ const updateProfile: AppRouteHandler<AuthRoutes["updateProfile"]> = async (ctx) 
     data: { email, firstName, lastName, phone },
   });
 
+  await prisma.notification.create({
+    data: {
+      userId,
+      title: "Profile updated successfully",
+      message: "Your profile has been updated successfully.",
+      category: "USER",
+      priority: "MEDIUM",
+    },
+  });
+
   return ctx.json({ message: "User updated successfully" });
 };
 

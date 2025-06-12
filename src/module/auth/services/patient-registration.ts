@@ -43,6 +43,16 @@ const patientRegistration: AppRouteHandler<AuthRoutes["patientRegistration"]> = 
     source: "USER_VERIFICATION",
   });
 
+  await prisma.notification.create({
+    data: {
+      userId: user.id,
+      title: "Welcome to the Patient Portal",
+      message: "Your account has been created successfully. Please verify your email.",
+      category: "USER",
+      priority: "MEDIUM",
+    },
+  });
+
   return ctx.json({ message: "User registered successfully" }, 201);
 };
 

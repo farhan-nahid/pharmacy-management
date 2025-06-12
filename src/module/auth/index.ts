@@ -13,11 +13,14 @@ const router = createRouter()
   .openapi(routes.verifyEmail, services.verifyEmail)
   .openapi(routes.verifyToken, services.verifyToken)
   .openapi(routes.getProfile, services.getProfile)
+  .openapi(routes.getUsers, services.getUsers)
+  .openapi(routes.resendVerificationCode, services.resendVerificationCode)
   .openapi(routes.resetPasswordRequest, services.resetPasswordRequest)
   .openapi(routes.resetPassword, services.resetPassword)
   .openapi(routes.changePassword, services.changePassword)
   .openapi(routes.updateProfile, services.updateProfile)
   .openapi(routes.userUpdate, services.userUpdate)
-  .openapi(routes.deleteAccount, services.deleteAccount);
+  .openapi(routes.deleteAccount, services.deleteAccount)
+  .openapi(routes.deleteUser, services.deleteUser);
 
 export default router;
