@@ -22,7 +22,7 @@ const getNotifications: AppRouteHandler<NotificationRoutes["getNotifications"]> 
     orderBy: { createdAt: "desc" },
   });
 
-  return ctx.json({ data: notifications });
+  return ctx.json({ data: notifications, message: "Notifications fetched successfully" });
 };
 
 // Get a single notification by ID
@@ -37,7 +37,7 @@ const getNotification: AppRouteHandler<NotificationRoutes["getNotification"]> = 
     throw new ApiError(404, "Notification not found");
   }
 
-  return ctx.json({ data: notification });
+  return ctx.json({ data: notification, message: "Notification fetched successfully" });
 };
 
 // Update a notification

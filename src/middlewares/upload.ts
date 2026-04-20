@@ -26,7 +26,7 @@ const uploadMiddleware = multer({
 export default function upload() {
   return createMiddleware(async (c, next) => {
     await new Promise<void>((resolve, reject) => {
-      uploadMiddleware(c.req.raw, c.res, (err) => {
+      uploadMiddleware(c.req.raw as any, c.res as any, (err) => {
         if (err)
           reject(err);
         else resolve();
