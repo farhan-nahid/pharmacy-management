@@ -19,7 +19,7 @@
     "@hono/zod-openapi": "^0.18.3",
     "@prisma/client": "^6.8.2",
     "@scalar/hono-api-reference": "^0.5.166",
-    "axios": "^1.15.0",
+    "axios": "^1.15.2",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.7.0",
     "dayjs": "^1.11.13",
