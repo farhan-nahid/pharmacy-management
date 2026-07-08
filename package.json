@@ -28,7 +28,7 @@
     "hono": "^4.12.25",
     "hono-pino": "^0.7.0",
     "jsonwebtoken": "^9.0.2",
-    "multer": "2.1.1",
+    "multer": "2.2.0",
     "multer-storage-cloudinary": "^4.0.0",
     "nodemailer": "^9.0.1",
     "pino": "^9.6.0",
