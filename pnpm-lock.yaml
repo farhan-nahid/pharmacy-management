@@ -13,16 +13,16 @@ importers:
         version: 7.3.4(zod@3.25.76)
       '@hono/node-server':
         specifier: ^1.19.13
-        version: 1.19.14(hono@4.12.25)
+        version: 1.19.14(hono@4.12.27)
       '@hono/zod-openapi':
         specifier: ^0.18.3
-        version: 0.18.4(hono@4.12.25)(zod@3.25.76)
+        version: 0.18.4(hono@4.12.27)(zod@3.25.76)
       '@prisma/client':
         specifier: ^6.8.2
         version: 6.19.3(prisma@6.19.3(typescript@5.9.3))(typescript@5.9.3)
       '@scalar/hono-api-reference':
         specifier: ^0.5.166
-        version: 0.5.184(hono@4.12.25)
+        version: 0.5.184(hono@4.12.27)
       axios:
         specifier: ^1.18.0
         version: 1.18.0
@@ -42,11 +42,11 @@ importers:
         specifier: ^12.0.1
         version: 12.0.3
       hono:
-        specifier: ^4.12.25
-        version: 4.12.25
+        specifier: ^4.12.27
+        version: 4.12.27
       hono-pino:
         specifier: ^0.7.0
-        version: 0.7.2(hono@4.12.25)(pino@9.14.0)
+        version: 0.7.2(hono@4.12.27)(pino@9.14.0)
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.3
@@ -1688,8 +1688,8 @@ packages:
       hono: '>=4.0.0'
       pino: '>=7.1.0'
 
-  hono@4.12.25:
-    resolution: {integrity: sha512-2NFaIyNVgJmBs/ecmtGzlmluTFs5cHEWGTdu0t1HBwYzoGXOL5nUQBRMXsXWla5i4KkG//QMzVP88m1+I3fdAQ==}
+  hono@4.12.27:
+    resolution: {integrity: sha512-1yrb/+w6HWQJrUCLkJ2IF5jNIPvvFkblV5RNOYl6bV+OA6p9GLcMpHFFGTosSvHvcAUibuUukRqhlYI4z32C7Q==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -2227,8 +2227,8 @@ packages:
     resolution: {integrity: sha512-Q8qQfPiZ+THO/3ZrOrO0cJJKfpYCagtMUkXbnEfmgUjwXg6z/WBeOyS9APBBPCTSiDV+s4SwQGu8yFsiMRIudg==}
     engines: {node: '>=4'}
 
-  postcss@8.5.20:
-    resolution: {integrity: sha512-lW616l85ucIQL+FocMmL7pQFPqBmwejrCMg+iPxyImlrANNJG9NHq/RkyCZopDhd8C3LA03PHRJDjkbGu8vvug==}
+  postcss@8.5.22:
+    resolution: {integrity: sha512-KBDEIpLrvpv16pp3K0Fw+UCoZfopFjjgeB+0tA/aaThfEE74kKDLrgg603YvOWJyg3+WYtyq3xYsQWsIyZlPqQ==}
     engines: {node: ^10 || ^12 || >=14}
 
   prelude-ls@1.2.1:
@@ -2919,20 +2919,20 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
-  '@hono/node-server@1.19.14(hono@4.12.25)':
+  '@hono/node-server@1.19.14(hono@4.12.27)':
     dependencies:
-      hono: 4.12.25
+      hono: 4.12.27
 
-  '@hono/zod-openapi@0.18.4(hono@4.12.25)(zod@3.25.76)':
+  '@hono/zod-openapi@0.18.4(hono@4.12.27)(zod@3.25.76)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.4(zod@3.25.76)
-      '@hono/zod-validator': 0.4.3(hono@4.12.25)(zod@3.25.76)
-      hono: 4.12.25
+      '@hono/zod-validator': 0.4.3(hono@4.12.27)(zod@3.25.76)
+      hono: 4.12.27
       zod: 3.25.76
 
-  '@hono/zod-validator@0.4.3(hono@4.12.25)(zod@3.25.76)':
+  '@hono/zod-validator@0.4.3(hono@4.12.27)(zod@3.25.76)':
     dependencies:
-      hono: 4.12.25
+      hono: 4.12.27
       zod: 3.25.76
 
   '@humanfs/core@0.19.2':
@@ -3074,10 +3074,10 @@ snapshots:
     dependencies:
       '@scalar/types': 0.0.40
 
-  '@scalar/hono-api-reference@0.5.184(hono@4.12.25)':
+  '@scalar/hono-api-reference@0.5.184(hono@4.12.27)':
     dependencies:
       '@scalar/core': 0.1.1
-      hono: 4.12.25
+      hono: 4.12.27
 
   '@scalar/openapi-types@0.1.9': {}
 
@@ -3366,7 +3366,7 @@ snapshots:
       '@vue/shared': 3.5.32
       estree-walker: 2.0.2
       magic-string: 0.30.21
-      postcss: 8.5.20
+      postcss: 8.5.22
       source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.5.32':
@@ -4187,13 +4187,13 @@ snapshots:
 
   help-me@5.0.0: {}
 
-  hono-pino@0.7.2(hono@4.12.25)(pino@9.14.0):
+  hono-pino@0.7.2(hono@4.12.27)(pino@9.14.0):
     dependencies:
       defu: 6.1.7
-      hono: 4.12.25
+      hono: 4.12.27
       pino: 9.14.0
 
-  hono@4.12.25: {}
+  hono@4.12.27: {}
 
   hookable@5.5.3: {}
 
@@ -4915,7 +4915,7 @@ snapshots:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
 
-  postcss@8.5.20:
+  postcss@8.5.22:
     dependencies:
       nanoid: 3.3.16
       picocolors: 1.1.1
